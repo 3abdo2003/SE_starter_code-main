@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Zones</title>
+    <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+    <link rel='stylesheet' href='/styles/style.css' />
+    <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+        <div>
+      {{#isAdmin}}
+        <div>
+          <nav class="navbar navbar-inverse" style="padding-left:130px;">
+            <ul class="nav navbar-nav">
+              <li><a href="/dashboard">Home</a></li>
+              <li><a href="/stations_example">Station</a></li>
+              <li><a href="/manage/routes">Routes</a></li>
+              <li><a href="/users">Users</a></li>
+              <li><a href="/users/add">Add Users</a></li>
+              <li><a href="/manage/stations/create">Create Station</a></li>
+              <li><a href="/manage/stations/edit/:stationId">Update Station</a></li>
+              <li><a href="/manage/routes/edit/:routeId">Update Route</a></li>
+              <li><a href="/manage/routes/create">Create Route</a></li>
+              <li class="active"><a href="/manage/zones">Zones</a></li>
+              <li><a href="/manage/zones/edit/:zoneId">Update Zones</a></li>  
+              <li><a href="/manage/requests/seniors/:requestId">Senior Request</a></li> 
+              <li><a href="/resetpassword">Reset Password</a></li>
+              <li><a href="/">Logout</a></li>       
+            </ul>
+          </nav>
+        </div>
+      {{/isAdmin}}
+
+      {{#isNormal}}
+        <div>
+          <nav class="navbar navbar-inverse" style="padding-left:130px;">
+            <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/stations_example">Stations</a></li>
+            <li><a href="/manage/routes">Routes</a></li>
+            <li><a href="/subscriptions">Subscriptions</a></li>
+            <li><a href="/purchase/subscriptions">Purchase Subscriptions</a></li>
+            <li><a href="/users/add">Add Users</a></li>
+            <li class="active"><a href="/manage/zones">Zones</a></li>
+            <li><a href="/requests/senior">Request Senior</a></li>
+            <li><a href="/resetpassword">Reset Password</a></li>
+            <li><a href="/">Logout</a></li> 
+            </ul>
+          </nav>
+        </div>
+      {{/isNormal}}
+      <br/>
+     {{#isAdmin}}
+        <div style="position:absolute; right:0;">
+          <input id="btnAddRoute" type="button" value="Update Zone" class="btn btn-primary" onclick="window.location.href='/manage/zones/edit/:zoneId'">
+          <br />
+        </div>
+      {{/isAdmin}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">zonetype</th>
+            <th scope="col">price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#zone}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{zonetype}}</td>
+              <td>{{price}}</td>
+              <td>
+              </td>
+            </tr> 
+          {{/zone}}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

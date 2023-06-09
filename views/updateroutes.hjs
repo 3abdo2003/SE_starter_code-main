@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Update Route</title>
+  <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+  <link rel='stylesheet' href='/styles/style.css' />
+  <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+  <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+</head>
+<body>
+  <script>
+$(document).ready(function(){
+  $("#submit").click(function(){
+    const routeId = $('#routeId').val();
+    const routeName = $('#routeName').val();
+    const data ={
+        routeName,
+        routeId
+    };
+    $.ajax({
+        type:'PUT',
+        url:`/api/v1/route/${routeId}` ,
+        data,
+        success: function(serverResponse){
+            if(serverResponse){
+                alert("Route updated !");
+            }
+        },
+        error: function(errorResponse){
+            if(errorResponse){
+                alert(`Route update error: ${errorResponse.responseText}`);
+            }
+        }
+    });
+  });
+});
+</script>
+    {{#isAdmin}}
+     <div>
+        <nav class="navbar navbar-inverse" style="padding-left:130px;">
+          <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li><a href="/stations_example">Station</a></li>
+            <li><a href="/manage/routes">Routes</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/users/add">Add Users</a></li>
+            <li><a href="/manage/stations/create">Create Station</a></li>
+            <li><a href="/manage/stations/edit/:stationId">Update Station</a></li>
+            <li class="active"><a href="/manage/routes/edit/:routeId">Update Route</a></li>
+            <li><a href="/manage/routes/create">Create Route</a></li>
+            <li><a href="/manage/zones">Zones</a></li>
+            <li><a href="/manage/zones/edit/:zoneId">Update Zones</a></li>  
+            <li><a href="/manage/requests/seniors/:requestId">Senior Request</a></li> 
+            <li><a href="/resetpassword">Reset Password</a></li>
+            <li><a href="/">Logout</a></li>
+          </ul>
+       </nav>
+      </div>
+    <div class="center">
+      <h1>Update Route</h1>
+    </div>
+    <div style="padding-left: 500px">
+    <form class="form-horizontal" style="width: 50%;">
+        <div class="form-group">
+          <label for="routeId" class="col-sm-2 control-label">Route ID</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="routeId" name="routeId" placeholder="routeId" value="">
+          </div>
+      </div>
+      <div class="form-group">
+          <label for="routeName" class="col-sm-2 control-label">Route Name</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="routeName" name="routeName" placeholder="routeName" value="">
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-sm-10 col-sm-offset-2">
+              <input id="submit" name="submit" type="button" value="submit" class="btn btn-primary">
+          </div>
+      </div>
+      {{/isAdmin}}

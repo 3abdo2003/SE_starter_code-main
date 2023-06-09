@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Courses</title>
+    <link rel='stylesheet' href='/styles/bootstrap.min.css' />
+    <link rel='stylesheet' href='/styles/style.css' />
+    <script src="/js/jquery-2.2.0.min.js" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <div>
+      {{#isAdmin}}
+    <div>
+    <nav class="navbar navbar-inverse" style="padding-left:130px;">
+      <ul class="nav navbar-nav">
+        <li><a href="/dashboard">Home</a></li>
+        <li class="active"><a href="/stations_example">Station</a></li>
+        <li><a href="/manage/routes">Routes</a></li>
+        <li><a href="/users">Users</a></li>
+        <li><a href="/users/add">Add Users</a></li>
+        <li><a href="/manage/stations/create">Create Station</a></li>
+        <li><a href="/manage/stations/edit/:stationId">Update Station</a></li>
+        <li><a href="/manage/routes/edit/:routeId">Update Route</a></li>
+        <li><a href="/manage/routes/create">Create Route</a></li>
+        <li><a href="/manage/zones">Zones</a></li>
+        <li><a href="/manage/zones/edit/:zoneId">Update Zones</a></li>  
+        <li><a href="/manage/requests/seniors/:requestId">Senior Request</a></li> 
+        <li><a href="/resetpassword">Reset Password</a></li>
+        <li><a href="/">Logout</a></li>       
+      </ul>
+  </nav>
+  </div>
+  {{/isAdmin}}
+
+  {{#isNormal}}
+      <div>
+    <nav class="navbar navbar-inverse" style="padding-left:130px;">
+      <ul class="nav navbar-nav">
+            <li><a href="/dashboard">Home</a></li>
+            <li class="active"><a href="/stations_example">Station</a></li>
+            <li><a href="/manage/routes">Routes</a></li>
+            <li><a href="/subscriptions">Subscriptions</a></li>
+            <li><a href="/purchase/subscriptions">Purchase Subscriptions</a></li>
+            <li><a href="/users/add">Add Users</a></li>
+            <li><a href="/manage/zones">Zones</a></li>
+            <li><a href="/requests/senior">Request Senior</a></li>
+            <li><a href="/resetpassword">Reset Password</a></li>
+            <li><a href="/">Logout</a></li>     
+      </ul>
+  </nav>
+  </div>
+  {{/isNormal}}
+    <br/>
+      {{#isAdmin}}
+<div style="position:absolute; right:0;">
+  <input id="btnAddStation" type="button" value="Add station" class="btn btn-primary" onclick="window.location.href='manage/stations/create'">
+  <br />
+</div>
+      {{/isAdmin}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Position</th>
+            <th scope="col">status</th>
+
+
+
+          </tr>
+               </thead>
+          <tbody>
+          {{#stations}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{stationname}}</td>
+              <td>{{stationtype}}</td>
+              <td>{{stationposition}}</td>
+              <td>{{stationstatus}}</td>
+              <td>
+                {{#isAdmin}}
+                <button class="btn btn-danger" onclick="deleteStation({{id}})">Delete</button>
+                {{/isAdmin}}
+              </td>
+            </tr> 
+          {{/stations}}
+          </tbody>
+      </table>
+    </div>
+    <script>
+      async function deleteStation(stationId) {
+        try {
+          const response = await fetch(`/api/v1/station/${stationId}`, { method: 'DELETE' });
+          const data = await response.json();
+          alert('Station deleted successfully!');
+          window.location.reload();
+        } catch (error) {
+          console.error(error);
+          alert('Failed to delete Station.');
+        }
+      }
+    </script>
+  </body>
+  </html>
